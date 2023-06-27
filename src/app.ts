@@ -17,21 +17,21 @@ export class App {
 	constructor(
 		@inject(TYPES.ILogger) private logger: ILogger,
 		@inject(TYPES.UsersController) private userController: UsersController,
-		@inject(TYPES.ExeptionFilter) private exeptionFilter: ExeptionFilter
+		@inject(TYPES.ExeptionFilter) private exeptionFilter: ExeptionFilter,
 	) {
 		this.app = express();
 		this.port = 8000;
 	}
 
-	useRoutes() {
+	useRoutes(): void {
 		this.app.use('/users', this.userController.router);
 	}
 
-	useExeptionsFilters() {
+	useExeptionsFilters(): void {
 		this.app.use(this.exeptionFilter.catch.bind(this.exeptionFilter));
 	}
 
-	public async init() {
+	public async init(): Promise<void> {
 		this.useRoutes();
 		this.useExeptionsFilters();
 		this.server = this.app.listen(this.port);
