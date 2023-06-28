@@ -10,6 +10,8 @@ import { IExeptionFilter } from './errors/exeption.filter.interface';
 import { IUsersService } from './users/users.service.interface';
 import { IUsersController } from './users/users.controller.interface';
 import { UserService } from './users/users.service';
+import { IConfigService } from './config/config.service.interface';
+import { ConfigService } from './config/config.service';
 
 export interface IBootstrapReturt {
 	appContainer: Container;
@@ -17,10 +19,11 @@ export interface IBootstrapReturt {
 }
 
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
-	bind<ILogger>(TYPES.ILogger).to(LoggerService);
+	bind<ILogger>(TYPES.ILogger).to(LoggerService).inSingletonScope();
 	bind<IExeptionFilter>(TYPES.ExeptionFilter).to(ExeptionFilter);
 	bind<IUsersController>(TYPES.UsersController).to(UsersController);
 	bind<IUsersService>(TYPES.UserService).to(UserService);
+	bind<IConfigService>(TYPES.ConfigService).to(ConfigService).inSingletonScope();
 	bind<App>(TYPES.Application).to(App);
 });
 
