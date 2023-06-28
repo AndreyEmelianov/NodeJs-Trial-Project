@@ -7,6 +7,8 @@ import { injectable, inject } from 'inversify';
 import { ILogger } from '../logger/logger.interface';
 import { TYPES } from '../types';
 import { IUsersController } from './users.controller.interface';
+import { UserLoginDto } from './dto/user-login.dto';
+import { UserRegisterDto } from './dto/user-register.dto';
 @injectable()
 export class UsersController extends BaseController implements IUsersController {
 	constructor(@inject(TYPES.ILogger) private LoggerService: ILogger) {
@@ -17,11 +19,13 @@ export class UsersController extends BaseController implements IUsersController 
 		]);
 	}
 
-	login(req: Request, res: Response, next: NextFunction): void {
+	login(req: Request<{}, {}, UserLoginDto>, res: Response, next: NextFunction): void {
+		console.log(req.body);
 		this.ok(res, 'login');
 	}
 
-	register(req: Request, res: Response, next: NextFunction): void {
+	register(req: Request<{}, {}, UserRegisterDto>, res: Response, next: NextFunction): void {
+		console.log(req.body);
 		this.ok(res, 'register');
 	}
 }
