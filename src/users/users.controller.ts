@@ -13,6 +13,7 @@ import { UserRegisterDto } from './dto/user-register.dto';
 import { ValidateMiddleware } from '../common/validate.middleware';
 import { IConfigService } from '../config/config.service.interface';
 import { IUsersService } from './users.service.interface';
+import { AuthGuard } from '../common/auth.guard';
 @injectable()
 export class UsersController extends BaseController implements IUsersController {
 	constructor(
@@ -38,6 +39,7 @@ export class UsersController extends BaseController implements IUsersController 
 				path: '/info',
 				method: 'get',
 				func: this.info,
+				middlewares: [new AuthGuard()],
 			},
 		]);
 	}
